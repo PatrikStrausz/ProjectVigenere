@@ -1,9 +1,6 @@
 package sample;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class DataFile {
@@ -13,10 +10,10 @@ public class DataFile {
 
 
         StringBuilder data = new StringBuilder();
-        try{
+        try {
             File myFile = new File(sourceFile);
             Scanner myReader = new Scanner(myFile);
-            while(myReader.hasNextLine()){
+            while (myReader.hasNextLine()) {
                 data.append("\n").append(myReader.nextLine());
             }
             myReader.close();
@@ -29,35 +26,87 @@ public class DataFile {
     }
 
 
-    public String encrypt(String sourceFile, String destFile, String Message, String Key) {
-        try {
+    public String encrypt(String sourceFile, String destFile, String plaintext, String keyword) throws IOException {
 
-            FileWriter fr = new FileWriter(destFile);
-            BufferedReader myReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(sourceFile)), Charset.forName("UTF-8")));
 
-            int c;
-            while ((c = myReader.read()) != -1) {
+        plaintext = plaintext.toUpperCase();
+        keyword = keyword.toUpperCase();
+        char msg[] = plaintext.toCharArray();
+        int msgLen = msg.length;
+        int i, j;
 
-                String EMessage = "";
-                Message = Message.toLowerCase();
-                for (int i = 0, j = 0; i < Message.length(); i++) {
-                    char letter = Message.charAt(i);
-                    EMessage += (char)(((letter - 65) + (Key.charAt(j)-65)) % 26 + 65);
-                    j = ++j % Key.length();
+        char key[] = new char[msgLen];
+        char encryptedMsg[] = new char[msgLen];
+
+        File source = new File(sourceFile);
+        File dest = new File(destFile);
+
+        FileWriter writer = new FileWriter(dest);
+        Scanner reader = new Scanner(source);
+
+        while (reader.hasNextLine()) {
+            plaintext = reader.nextLine();
+
+
+            for (i = 0, j = 0; i < msgLen; ++i, ++j) {
+                if (j == keyword.length()) {
+                    j =0;
                 }
-                return EMessage;
+                key[i] = keyword.charAt(j);
             }
 
 
-            } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
+            for (i = 0; i < msgLen; ++i)
+                encryptedMsg[i] = (char) (((msg[i] + key[i]) % 26) + 'A');
 
-    } catch (Exception e) {
-            e.printStackTrace();
+            writer.write(String.valueOf(encryptedMsg));
         }
-        return null;
+
+        System.out.println("Original Message: " + plaintext);
+        System.out.println("Keyword: " + keyword);
+
+        System.out.println("Key: " + String.valueOf(key));
+        System.out.println();
+        System.out.println("Encrypted Message: " + String.valueOf(encryptedMsg));
+        writer.close();
+        reader.close();
+
+        return String.valueOf(encryptedMsg);
+    }
+
+
+    public void ddd(String plaintext, String keyword){
+
+
+
+        plaintext = plaintext.toUpperCase();
+        keyword = keyword.toUpperCase();
+        char msg[] = plaintext.toCharArray();
+        int msgLen = msg.length;
+        int i, j;
+
+        char key[] = new char[msgLen];
+        char encryptedMsg[] = new char[msgLen];
+
+
+        for (i = 0, j = 0; i < msgLen; ++i, ++j) {
+            if (j == keyword.length()) {
+                j =0;
+            }
+            key[i] = keyword.charAt(j);
+        }
+
+
+        for (i = 0; i < msgLen; ++i)
+            encryptedMsg[i] = (char) (((msg[i] + key[i]) % 26) + 'A');
+
+        System.out.println("Original Message: " + plaintext);
+        System.out.println("Keyword: " + keyword);
+
+        System.out.println("Key: " + String.valueOf(key));
+        System.out.println();
+        System.out.println("Encrypted Message: " + String.valueOf(encryptedMsg));
+
     }
 
 }

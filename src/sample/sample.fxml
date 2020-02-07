@@ -21,7 +21,7 @@
             <children>
                 <TextField fx:id="txtText" layoutX="274.0" layoutY="60.0" />
                 <Button fx:id="btnChoose" layoutX="95.0" layoutY="60.0" mnemonicParsing="false" onAction="#openFileChooser" text="Choose File" />
-            <Button fx:id="btnEncrypt" layoutX="108.0" layoutY="160.0" mnemonicParsing="false" text="Encrypt" />
+            <Button fx:id="btnEncrypt" layoutX="108.0" layoutY="160.0" mnemonicParsing="false" onAction="#encrypt" text="Encrypt" />
             <Button fx:id="btnDecrypt" layoutX="296.0" layoutY="160.0" mnemonicParsing="false" text="Decrypt" />
             <Label fx:id="lblOriginal" layoutX="49.0" layoutY="237.0" text="Label" />
             <Label fx:id="lblPath" layoutX="108.0" layoutY="106.0" text="Label" />

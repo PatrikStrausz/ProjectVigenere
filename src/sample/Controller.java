@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 
 public class Controller {
 
@@ -23,12 +24,18 @@ public class Controller {
     public Label lblPath;
     public Label lblEncrypted;
 
+    JFileChooser fileChooser = new JFileChooser(".");
+
 
     public void initialize() {
-        if (txtText.getText().isEmpty()) {
-            btnEncrypt.setDisable(true);
-            btnDecrypt.setDisable(true);
-        }
+//        if (txtText.getText().isEmpty()) {
+//            btnEncrypt.setDisable(true);
+//            btnDecrypt.setDisable(true);
+//        }
+
+        DataFile dataFile = new DataFile();
+        dataFile.ddd("Computer programming is the process of designing and building an executable computer program to accomplish a specific computing result.",
+                "zebra");
 
 
     }
@@ -42,7 +49,7 @@ public class Controller {
 //        fileChooser.showOpenDialog(stage);
 
 
-        JFileChooser fileChooser = new JFileChooser(".");
+
         int status = fileChooser.showOpenDialog(null);
 
         if (status == JFileChooser.APPROVE_OPTION) {
@@ -63,4 +70,26 @@ public class Controller {
 
 
     }
+
+
+
+    public void encrypt() throws IOException {
+
+        int status = fileChooser.showOpenDialog(null);
+
+        if (status == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+
+            DataFile dataFile = new DataFile();
+
+
+
+            dataFile.encrypt(selectedFile.getAbsolutePath(), selectedFile.getPath()+"_encrypted.txt", lblOriginal.getText(), txtText.getText().toUpperCase() );
+
+
+        } else if (status == JFileChooser.CANCEL_OPTION) {
+            System.out.println("canceled");
+        }
+    }
+
 }
