@@ -1,13 +1,15 @@
 package sample;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class DataFile {
 
 
-    public String printFile(String sourceFile) {
-
+    public String printFileData(String sourceFile) {
 
         StringBuilder data = new StringBuilder();
         try {
@@ -25,88 +27,86 @@ public class DataFile {
 
     }
 
-
-    public String encrypt(String sourceFile, String destFile, String plaintext, String keyword) throws IOException {
-
-
-        plaintext = plaintext.toUpperCase();
-        keyword = keyword.toUpperCase();
-        char msg[] = plaintext.toCharArray();
-        int msgLen = msg.length;
-        int i, j;
-
-        char key[] = new char[msgLen];
-        char encryptedMsg[] = new char[msgLen];
-
+    public String encrypt(String sourceFile, String targetFile, String text, String key) throws IOException {
+        StringBuilder res = new StringBuilder();
         File source = new File(sourceFile);
-        File dest = new File(destFile);
-
-        FileWriter writer = new FileWriter(dest);
+        File target = new File(targetFile);
+        FileWriter writer = new FileWriter(target);
         Scanner reader = new Scanner(source);
 
+
         while (reader.hasNextLine()) {
-            plaintext = reader.nextLine();
+
+            text = reader.nextLine();
+
+            key = key.toUpperCase();
+            text = text.toUpperCase();
+            for (int i = 0, j = 0; i < text.length(); i++) {
+                char c = text.charAt(i);
+                if (c < 'A' || c > 'Z') {
+                    res.append(c);
+                    continue;
 
 
-            for (i = 0, j = 0; i < msgLen; ++i, ++j) {
-                if (j == keyword.length()) {
-                    j =0;
                 }
-                key[i] = keyword.charAt(j);
+                res.append((char) ((c + key.charAt(j) - 2 * 'A') % 26 + 'A'));
+                j = ++j % key.length();
             }
 
-
-            for (i = 0; i < msgLen; ++i)
-                encryptedMsg[i] = (char) (((msg[i] + key[i]) % 26) + 'A');
-
-            writer.write(String.valueOf(encryptedMsg));
+            writer.write(res.toString());
         }
 
-        System.out.println("Original Message: " + plaintext);
-        System.out.println("Keyword: " + keyword);
+        System.out.println("Original text: " + text);
+        System.out.println("Key: " + key);
+        System.out.println("Encrypted: " + res);
 
-        System.out.println("Key: " + String.valueOf(key));
-        System.out.println();
-        System.out.println("Encrypted Message: " + String.valueOf(encryptedMsg));
-        writer.close();
+
         reader.close();
-
-        return String.valueOf(encryptedMsg);
+        writer.close();
+        return res.toString();
     }
 
-
-    public void ddd(String plaintext, String keyword){
-
+    public String decrypt(String sourceFile, String targetFile, String text, String key) throws IOException {
 
 
-        plaintext = plaintext.toUpperCase();
-        keyword = keyword.toUpperCase();
-        char msg[] = plaintext.toCharArray();
-        int msgLen = msg.length;
-        int i, j;
-
-        char key[] = new char[msgLen];
-        char encryptedMsg[] = new char[msgLen];
+        StringBuilder res = new StringBuilder();
 
 
-        for (i = 0, j = 0; i < msgLen; ++i, ++j) {
-            if (j == keyword.length()) {
-                j =0;
+        File source = new File(sourceFile);
+        File target = new File(targetFile);
+        FileWriter writer = new FileWriter(target);
+        Scanner reader = new Scanner(source);
+
+
+        while (reader.hasNextLine()) {
+
+            text = reader.nextLine();
+
+            key = key.toUpperCase();
+            text = text.toUpperCase();
+            for (int i = 0, j = 0; i < text.length(); i++) {
+                char c = text.charAt(i);
+                if (c < 'A' || c > 'Z') {
+                    res.append(c);
+                    continue;
+                }
+                res.append((char) ((c - key.charAt(j) + 26) % 26 + 'A'));
+                j = ++j % key.length();
             }
-            key[i] = keyword.charAt(j);
+            writer.write(res.toString());
         }
 
 
-        for (i = 0; i < msgLen; ++i)
-            encryptedMsg[i] = (char) (((msg[i] + key[i]) % 26) + 'A');
+        System.out.println("Original text: " + text);
+        System.out.println("Key: " + key);
+        System.out.println("Decrypted: " + res);
 
-        System.out.println("Original Message: " + plaintext);
-        System.out.println("Keyword: " + keyword);
 
-        System.out.println("Key: " + String.valueOf(key));
-        System.out.println();
-        System.out.println("Encrypted Message: " + String.valueOf(encryptedMsg));
+        reader.close();
+        writer.close();
+        return res.toString();
 
     }
+
 
 }

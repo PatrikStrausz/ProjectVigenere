@@ -16,19 +16,23 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-        <Pane fx:id="pane" prefHeight="298.0" prefWidth="500.0">
-
+        <Pane prefHeight="299.0" prefWidth="500.0">
             <children>
-                <TextField fx:id="txtText" layoutX="274.0" layoutY="60.0" />
-                <Button fx:id="btnChoose" layoutX="95.0" layoutY="60.0" mnemonicParsing="false" onAction="#openFileChooser" text="Choose File" />
-            <Button fx:id="btnEncrypt" layoutX="108.0" layoutY="160.0" mnemonicParsing="false" onAction="#encrypt" text="Encrypt" />
-            <Button fx:id="btnDecrypt" layoutX="296.0" layoutY="160.0" mnemonicParsing="false" text="Decrypt" />
-            <Label fx:id="lblOriginal" layoutX="49.0" layoutY="237.0" text="Label" />
-            <Label fx:id="lblPath" layoutX="108.0" layoutY="106.0" text="Label" />
-            <Label fx:id="lblEncrypted" layoutX="325.0" layoutY="237.0" text="Label" />
-
+                <Button fx:id="btnFile" layoutX="93.0" layoutY="60.0" mnemonicParsing="false" onAction="#showFileChooser" text="File chooser" />
+                <Button fx:id="btnEncrypt" layoutX="97.0" layoutY="172.0" mnemonicParsing="false" onAction="#encrypt" text="Encrypt" />
+                <Button fx:id="btnDecrypt" layoutX="350.0" layoutY="172.0" mnemonicParsing="false" onAction="#decrypt" text="Decrypt" />
+                <TextField fx:id="txtText" layoutX="258.0" layoutY="60.0" onKeyReleased="#handleKeyReleased" promptText="Enter key:" />
+                <Label fx:id="lblPath" layoutX="93.0" layoutY="34.0" />
+                <TextFlow layoutX="3.0" layoutY="200.0" prefHeight="97.0" prefWidth="242.0">
+                    <children>
+                        <Label fx:id="lblOriginal" maxWidth="242.0" wrapText="true" />
+                    </children>
+                </TextFlow>
+                <TextFlow layoutX="258.0" layoutY="200.0" prefHeight="97.0" prefWidth="242.0">
+                    <children>
+                        <Label fx:id="lblChanged" maxWidth="242.0" wrapText="true" />
+                    </children></TextFlow>
             </children>
-
         </Pane>
     </children>
 </GridPane>
