@@ -47,14 +47,15 @@ public class DataFile {
                     res.append(c);
                     continue;
 
-
                 }
                 res.append((char) ((c + key.charAt(j) - 2 * 'A') % 26 + 'A'));
                 j = ++j % key.length();
+
             }
 
-            writer.write(res.toString());
+
         }
+        writer.write(res.toString());
 
         System.out.println("Original text: " + text);
         System.out.println("Key: " + key);
@@ -93,9 +94,9 @@ public class DataFile {
                 res.append((char) ((c - key.charAt(j) + 26) % 26 + 'A'));
                 j = ++j % key.length();
             }
-            writer.write(res.toString());
-        }
 
+        }
+        writer.write(res.toString());
 
         System.out.println("Original text: " + text);
         System.out.println("Key: " + key);
