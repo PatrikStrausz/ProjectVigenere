@@ -31,11 +31,21 @@ public class Controller {
 
     }
 
+    public void handleOtherCharacters(){
+        txtText.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\sa-zA-Z*")) {
+                txtText.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+            }
+        });
+    }
+
     public void handleKeyReleased() {
         String text = txtText.getText();
         boolean disableBtn = text.isEmpty() || text.trim().isEmpty();
         btnEncrypt.setDisable(disableBtn);
         btnDecrypt.setDisable(disableBtn);
+
+
     }
 
 
