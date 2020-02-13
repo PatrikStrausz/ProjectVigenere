@@ -32,10 +32,15 @@ public class Controller {
     }
 
     public void handleOtherCharacters(){
+
+
         txtText.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\sa-zA-Z*")) {
-                txtText.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+
+            if (!newValue.matches("a-zA-Z*")) {
+                txtText.setText(newValue.replaceAll("[^a-zA-Z]", ""));
             }
+
+
         });
     }
 
@@ -71,7 +76,7 @@ public class Controller {
 
         selectedFile = fileChooser.getSelectedFile();
         String target = selectedFile.getParent() + "\\data_encrypted.txt";
-        dataFile.encrypt(selectedFile.getAbsolutePath(), target, lblOriginal.getText(), txtText.getText());
+        dataFile.encrypt(selectedFile.getAbsolutePath(), target, lblOriginal.getText(), txtText.getText().trim());
 
 
         lblChanged.setText("Encrypted text: " + dataFile.printFileData(target));
