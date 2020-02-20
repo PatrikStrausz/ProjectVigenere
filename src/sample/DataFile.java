@@ -38,9 +38,9 @@ public class DataFile {
         while (reader.hasNextLine()) {
 
             text = reader.nextLine();
-
-            key = key.toUpperCase();
             text = text.toUpperCase();
+            key = key.toUpperCase();
+
             for (int i = 0, j = 0; i < text.length(); i++) {
                 char c = text.charAt(i);
                 if (c < 'A' || c > 'Z') {
